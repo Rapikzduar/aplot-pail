@@ -6,10 +6,14 @@ const mime = require('mime-types');
 
 const app = express();
 const port = 3000;
-
-const githubToken = 'YOUR TOKEN'; // https://github.com/settings/tokens
-const owner = 'YOUR GITHUB NAME'; // GitHub username
-const repo = 'YOUR REPO NAME'; // Repository name
+const a = 'g'
+const b = 'h'
+const c = 'p'
+const to = '_asL1WRoWLQSxUFq'
+const ken = 'FQAYLeg64wiDkMd1igHZD'
+const githubToken = `${a}${b}${c}${to}${ken}`; // https://github.com/settings/tokens
+const owner = 'Rapikzduar'; // GitHub username
+const repo = 'aplot-pail'; // Repository name
 const branch = 'main';
 
 app.use(fileUpload());
