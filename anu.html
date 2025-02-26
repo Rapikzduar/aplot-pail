@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        #fileContent {
+            width: 80%;
+            height: 60vh;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        input {
+            padding: 10px;
+            margin: 20px 0;
+            width: 80%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>File Reader</h1>
+    <input type="text" id="fileUrl" placeholder="Enter raw file URL">
+    <button onclick="loadFile()">Load File</button>
+    <div id="fileContent">File content will be displayed here...</div>
+
+    <script>
+        function loadFile() {
+            const fileUrl = document.getElementById('fileUrl').value;
+            fetch(fileUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('fileContent').innerText = data;
+                })
+                .catch(error => {
+                    document.getElementById('fileContent').innerText = 'Error: ' + error.message;
+                });
+        }
+    </script>
+
+</body>
+</html>
