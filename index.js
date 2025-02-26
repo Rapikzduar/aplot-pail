@@ -19,7 +19,7 @@ const branch = 'main';
 app.use(fileUpload());
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/uploadfile/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/upload', async (req, res) => {
