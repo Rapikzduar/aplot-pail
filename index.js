@@ -13,7 +13,7 @@ const to = '_asL1WRoWLQSxUFq'
 const ken = 'FQAYLeg64wiDkMd1igHZD'
 const githubToken = `${a}${b}${c}${to}${ken}`; // https://github.com/settings/tokens
 const owner = 'Rapikzduar'; // GitHub username
-const repo = 'aplot-pail'; // Repository name
+const repo = 'aplot-pel'; // Repository name
 const branch = 'main';
 
 app.use(fileUpload());
@@ -30,7 +30,7 @@ app.post('/upload', async (req, res) => {
   let uploadedFile = req.files.file;
   let mimeType = mime.lookup(uploadedFile.name);
   let fileName = `${Date.now()}.${mime.extension(mimeType)}`;
-  let filePath = `uploads/${fileName}`;
+  let filePath = `readfile/${fileName}`;
   let base64Content = Buffer.from(uploadedFile.data).toString('base64');
 
   try {
@@ -45,7 +45,7 @@ app.post('/upload', async (req, res) => {
       },
     });
 
-    let rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+    let rawUrl = `https://aplot-pail.vercel.app/${filePath}`;
     res.send(`File uploaded successfully: <a href="${rawUrl}">${rawUrl}</a>`);
   } catch (error) {
     console.error(error);
