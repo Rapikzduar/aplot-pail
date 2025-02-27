@@ -4,6 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload File</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+        <div class="md:p-8">
+            <h1 class="text-2xl font-semibold mb-4 text-gray-800">Upload File</h1>
+            <form ref="uploadForm" id="uploadForm" action="/upload" method="post" encType="multipart/form-data" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Pilih File</label>
+                    <div class="mt-1">
+                        <input type="file" name="file" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Upload File</button>
+                </div>
+            </form>
+
+            <div id="result" class="mt-4 hidden">
+                <div class="flex items-center justify-between">
+                    <p id="resultText" class="text-gray-700"></p>
+                    <button id="copyButton" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">Salin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const resultDiv = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+        const copyButton = document.getElementById('copyButton');
+
+        uploadForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(uploadForm);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.text();
+                    resultText.textContent = data;
+                    resultDiv.classList.remove('hidden');
+                } else {
+                    resultText.textContent = 'Upload gagal.';
+                    resultDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultText.textContent = 'Terjadi kesalahan.';
+                resultDiv.classList.remove('hidden');
+            }
+        });
+
+        copyButton.addEventListener('click', () => {
+            const textToCopy = resultText.textContent;
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    alert('Teks disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin teks: ', err);
+                });
+        });
+    </script>
+</body>
+</html>
+<!---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
 </head>
 <body>
     <h1>Upload File</h1>
@@ -13,3 +92,4 @@
     </form>
 </body>
 </html>
+--->
