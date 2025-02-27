@@ -46,7 +46,7 @@ app.post('/upload', async (req, res) => {
     });
 
     let rawUrl = `https://uploadfile-rapikz-yeah.vercel.app/${filePath}`;
-    res.send(`<a href="${rawUrl}"</a>`);
+    res.send(`${rawUrl}`);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error uploading file.');
