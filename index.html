@@ -5,68 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload File</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        function copyToClipboard() {
-            const urlElement = document.getElementById('uploadedUrl');
-            if (urlElement) {
-                const url = urlElement.textContent;
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('URL berhasil disalin!');
-                }).catch(err => {
-                    console.error('Gagal menyalin URL: ', err);
-                });
-            }
-        }
-    </script>
 </head>
 <body class="bg-gray-100 p-8">
     <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
         <div class="p-8">
             <h1 class="text-2xl font-semibold mb-4">Upload File</h1>
-            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Pilih File</label>
-                    <div class="mt-1">
-                        <input type="file" name="file" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
+            <form ref="uploadForm" id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="file">
+                        Pilih File
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" name="file" />
                 </div>
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Upload File</button>
-                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Upload File
+                </button>
             </form>
-            <div id="uploadedUrlContainer" class="mt-4 hidden">
-                <p class="text-gray-700">URL File:</p>
-                <div class="flex items-center">
-                    <p id="uploadedUrl" class="flex-grow bg-gray-200 p-2 rounded-md overflow-x-auto"></p>
-                    <button onclick="copyToClipboard()" class="ml-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Salin</button>
-                </div>
-            </div>
         </div>
     </div>
-    <script>
-        // Contoh penanganan respon dari server (ganti dengan logika sesuai server Anda)
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah form submit default
-            const formData = new FormData(this);
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json()) //asumsi response dari server json, ubah jika perlu
-            .then(data => {
-                if(data.url) { //asumsi data.url berisi url file yang di upload
-                    document.getElementById('uploadedUrl').textContent = data.url;
-                    document.getElementById('uploadedUrlContainer').classList.remove('hidden');
-                } else {
-                    alert("Upload gagal");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Upload gagal");
-            });
-        });
-    </script>
 </body>
 </html>
 <!---
