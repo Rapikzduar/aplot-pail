@@ -7,69 +7,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
-    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-        <h1 class="text-2xl font-semibold mb-4">Upload File</h1>
-        <form ref="uploadForm" id="uploadForm" action="/upload" method="post" encType="multipart/form-data">
-            <div class="mb-4">
-                <input type="file" name="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-500 file:text-white hover:file:bg-violet-600" />
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Upload File
-            </button>
-        </form>
+    <h1 class="text-2xl font-bold mb-4">Upload File</h1>
+    <form ref="uploadForm" id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+        <input type="file" name="file" class="mb-2 p-2 border rounded">
+        <input type="submit" value="Upload File" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+    </form>
 
-        <div id="result" class="mt-4 hidden">
-            <p id="resultText" class="border p-2 rounded-md bg-gray-50">
-                </p>
-            <button id="copyButton" class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Salin Teks
-            </button>
-        </div>
+    <div id="result" class="mt-4 p-4 border rounded bg-white">
+        <p id="resultText" class="break-words">Hasil akan ditampilkan di sini...</p>
+        <button id="copyButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 cursor-pointer">Salin Teks</button>
     </div>
 
     <script>
-        const uploadForm = document.getElementById('uploadForm');
-        const resultDiv = document.getElementById('result');
-        const resultText = document.getElementById('resultText');
-        const copyButton = document.getElementById('copyButton');
-
-        uploadForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(uploadForm);
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (response.ok) {
-                    const data = await response.text(); // or response.json() if you are sending json
-                    resultText.textContent = data;
-                    resultDiv.classList.remove('hidden');
-                } else {
-                    resultText.textContent = 'Upload gagal.';
-                    resultDiv.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                resultText.textContent = 'Terjadi kesalahan.';
-                resultDiv.classList.remove('hidden');
-            }
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const textToCopy = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                alert('Teks berhasil disalin!');
+            }, function(err) {
+                console.error('Tidak dapat menyalin teks: ', err);
+                alert('Gagal menyalin teks.');
+            });
         });
 
-        copyButton.addEventListener('click', () => {
-            const textToCopy = resultText.textContent;
-            navigator.clipboard.writeText(textToCopy)
-                .then(() => {
-                    alert('Teks berhasil disalin!');
-                })
-                .catch(err => {
-                    console.error('Gagal menyalin teks: ', err);
-                    alert('Gagal menyalin teks.');
-                });
-        });
+        // Contoh bagaimana menampilkan hasil (replace with your actual upload result handling)
+        // Simulasi hasil upload
+        setTimeout(function() {
+            document.getElementById('resultText').textContent = "Ini adalah contoh hasil upload yang panjang dan akan di salin. contoh hasil upload yang panjang dan akan di salin. contoh hasil upload yang panjang dan akan di salin. contoh hasil upload yang panjang dan akan di salin. contoh hasil upload yang panjang dan akan di salin.";
+        }, 1000);
     </script>
 </body>
 </html>
