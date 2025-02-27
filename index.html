@@ -24,8 +24,8 @@
 
             <div id="result" class="mt-4 hidden">
                 <div class="flex items-center justify-between">
-                    <p id="resultText" class="text-gray-700"></p>
-                    <button id="copyButton" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">Salin</button>
+                    <p id="resultUrl" class="text-gray-700 break-words"></p>
+                    <button id="copyButton" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">Salin URL</button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
     <script>
         const uploadForm = document.getElementById('uploadForm');
         const resultDiv = document.getElementById('result');
-        const resultText = document.getElementById('resultText');
+        const resultUrl = document.getElementById('resultUrl');
         const copyButton = document.getElementById('copyButton');
 
         uploadForm.addEventListener('submit', async (event) => {
@@ -50,27 +50,27 @@
 
                 if (response.ok) {
                     const data = await response.text();
-                    resultText.textContent = data;
+                    resultUrl.textContent = data; // Asumsikan server mengembalikan URL file
                     resultDiv.classList.remove('hidden');
                 } else {
-                    resultText.textContent = 'Upload gagal.';
+                    resultUrl.textContent = 'Upload gagal.';
                     resultDiv.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                resultText.textContent = 'Terjadi kesalahan.';
+                resultUrl.textContent = 'Terjadi kesalahan.';
                 resultDiv.classList.remove('hidden');
             }
         });
 
         copyButton.addEventListener('click', () => {
-            const textToCopy = resultText.textContent;
-            navigator.clipboard.writeText(textToCopy)
+            const urlToCopy = resultUrl.textContent;
+            navigator.clipboard.writeText(urlToCopy)
                 .then(() => {
-                    alert('Teks disalin!');
+                    alert('URL disalin!');
                 })
                 .catch(err => {
-                    console.error('Gagal menyalin teks: ', err);
+                    console.error('Gagal menyalin URL: ', err);
                 });
         });
     </script>
