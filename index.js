@@ -67,9 +67,6 @@ app.post('/upload', async (req, res) => {
       <div class="text-center">
         ${rawUrl}
       </div>
-      <div class="text-center mt-4">
-        <button onclick="copyUrl()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salin URL</button>
-      </div>
     </div>
   </div>
 
